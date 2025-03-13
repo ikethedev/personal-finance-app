@@ -1,0 +1,237 @@
+nav {
+  display: flex;
+  padding: 10px 16px 0;
+  justify-content: space-around;
+  position: relative;
+  background-color: black;
+  order: 2;
+  min-height: 44px;
+  transition: all ease-in-out 1000ms;
+}
+
+.collapsed {
+  width: 4rem;
+  transition: 1000ms ease-in-out width;
+}
+
+.expanded {
+  width: 18.8rem;
+  transition: 1000ms ease-in-out width;
+}
+
+@media screen and (min-width: 1440px) {
+  nav {
+    font-size: 1rem;
+    flex-direction: column;
+    justify-content: start;
+    padding-left: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+}
+
+
+.logoLarge {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 24px;
+    display: none;
+}
+
+@media screen and (min-width: 1440px) {
+  .logoLarge {
+    display: block;
+    
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  display: flex;
+  align-items: end;
+  width: 100%;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+@media screen and (min-width: 1440px) {
+  ul {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+.nav-icon {
+  position: relative;
+  z-index: 100;
+  padding-left: 22.3px;
+  padding-right: 22.3px;
+}
+
+.path__name {
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.7s;
+}
+
+.active-icon {
+  filter: brightness(0) saturate(100%) invert(46%) sepia(21%) saturate(745%)
+    hue-rotate(120deg);
+}
+
+@media screen and (min-width: 768px) {
+  nav {
+    min-height: 55px;
+  }
+
+  .path_name {
+    display: block;
+    text-align: center;
+    color: var(--grey-300);
+    font-size: 0.75rem;
+    font-family: "Public Sans", sans-serif;
+    font-weight: 600;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .path_name {
+    font-size: 1rem;
+  }
+
+}
+
+.minimize_menu {
+  display: none;
+}
+
+@media screen and (min-width: 1440px) {
+  .minimize__menu {
+    padding-left: 24px;
+    display: flex;
+    color: var(--grey-300);
+    gap: 10px;
+    margin-top: auto;
+    padding-bottom: 9rem;
+  }
+}
+
+.nav__list-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  transition: background-color 0.3s ease, border-radius 0.3s ease,
+    border 0.3s ease;
+  z-index: 100;
+}
+
+.nav__list-item.active {
+  border-bottom: solid var(--green) 3px;
+}
+
+@media screen and (min-width: 1440px) {
+  .nav__list-item {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-right: 32px;
+    width: 220px;
+    flex-direction: row;
+    transition: background-color 0.3s ease, border-radius 0.3s ease,
+      border 0.3s ease;
+  }
+
+  /* Remove border-bottom in favor of left-border at 1440px */
+  .nav__list-item.active {
+    border-bottom: none;
+    border-left: 4px solid var(--green);
+    border-radius: 0 10px 10px 0;
+  }
+}
+
+.nav__list-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 275px;
+  height: 0;
+  background-color: var(--nav-active-background);
+  transition: height 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+  z-index: -1;
+  border-radius: inherit; /* Ensures ::before follows the border-radius */
+  transition: all ease-in-out 1000ms;
+}
+
+.collapsed .nav__list-item::before {
+  width: 4rem;
+  transition: all ease-out 500ms;
+}
+
+.nav__list-item.active::before,
+.nav__list-item:hover::before {
+  height: 100%;
+  border-radius: inherit;
+}
+
+@media screen and (min-width: 1440px) {
+  .nav__list-item.active::before {
+    border-bottom: none;
+    border-radius: inherit;
+  }
+
+  .nav__list-item:hover::before {
+    border-bottom: none;
+    border-left: 4px solid var(--green);
+    border-radius: inherit;
+    border-radius: 0 10px 10px 0;
+  }
+}
+
+.collapsed .nav__list-item:hover::before {
+  width: 4rem; 
+  height: 100%;
+  border-radius: inherit;
+  border-radius: 0 10px 10px 0;
+}
+
+.collapsed .nav__list-item.active {
+  width: 4rem;
+  transition: width 0.3s ease-in-out;
+}
+
+.rotate180{
+    transform: rotate(180deg);
+    transition: 1000ms ease-in-out transform ;
+}
+
+.rotate0{
+    transform: rotate(0deg);
+    transition: 1000ms ease-in-out transform ;
+}
+
+.hidden{
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+
+}
+
+
+.visible{
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+
+}
+
+.toggle__container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    white-space: nowrap;
+    padding-left: 24px;
+    margin-top: auto;
+    padding-bottom: 5rem;
+}
