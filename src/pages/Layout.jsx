@@ -47,7 +47,7 @@ const Layout = () => {
                   alt="go to all overview"
                   className={`nav-icon ${isActive ? "active-icon" : ""}`}
                 />
-                {isExpanded ? <p className="path__name">Transactions</p> : ""}
+                <p className={`path_name ${isExpanded ? "visible" : "hidden"}`}>Transaction</p>             
               </li>
             )}
           </NavLink>
