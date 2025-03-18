@@ -13,6 +13,8 @@ import styles from  "../styles/commonform.module.css";
 const Login = () => {
     const [showSignUp, setShowSignUp] = useState(false)
     const [showPassword, setShowPass] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     // need to use an async function here because we are fetching a promise
     const fetchAPI = async () => {
@@ -31,9 +33,11 @@ const Login = () => {
         setShowSignUp(!showSignUp)
     }
 
-    const auth = () => {
-        alert("User has been fetched")
-    }
+
+    
+    
+
+    
 
     return(
         <div className={styles.auth__page}>
@@ -44,7 +48,7 @@ const Login = () => {
                 <img className={styles.auth__illustration} src={authPageIllustration} alt="" />
             </div>
             <div className={styles.form__container}>
-                {showSignUp ? <SignUp togglePasswordView={togglePasswordView} toggleSignUp={toggleSignUp}/> : <LoginForm toggleSignUp={toggleSignUp} togglePasswordView={togglePasswordView} auth={auth}/>}
+                {showSignUp ? <SignUp togglePasswordView={togglePasswordView} toggleSignUp={toggleSignUp}/> : <LoginForm toggleSignUp={toggleSignUp} togglePasswordView={togglePasswordView} />}
             </div>
         </div>
     )

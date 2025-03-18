@@ -3,10 +3,11 @@ import hidePassword from "../assets/images/icon-hide-password.svg";
 import errorIcon from "../assets/images/formerror.svg";
 import styles from  "../styles/commonform.module.css";
 import { useDebouncedCallback } from "use-debounce";
+import { supabase } from "../../backend/supabassClient";
 
 const SignUp = ({ toggleSignUp }) => {
   const [showPassword, setShowPass] = useState(false);
-
+  const [username, setUsername] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isErrorEmail, setIsErrorEmail] = useState(false);
@@ -30,6 +31,11 @@ const SignUp = ({ toggleSignUp }) => {
       `Password requirement "${req.message}": ${req.valid ? "✓" : "✗"}`
     );
   });
+
+  const handleUsernameChange = (e) => {
+    const userNameValue = e.target.value;
+    setUsername(userNameValue)
+  }
 
   function togglePasswordView() {
     setShowPass(!showPassword);
@@ -68,17 +74,39 @@ const SignUp = ({ toggleSignUp }) => {
     setShowPass(!showPassword);
   }
 
-  const createUser = (e) => {
+  const createUser = async (e) => {
     e.preventDefault()
+
+    try{
+      const { data, err } = await supabase.auth.signUp(
+        {
+          email: email,
+          password: password,
+          options: {
+            data: {
+              user_name: username,
+            }
+          }
+        }
+      )
+      alert("check email for verfication link")
+    } catch(err){
+      alert(err)
+    }
+
+  
+  return;
   }
 
+
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={createUser}>
       <h2 className={styles.form__header}>Sign Up</h2>
       <div>
         <label htmlFor="username">Username</label>
         <div className={styles["form__input-container"]}>
-          <input className={styles.form__input} type="text" name="username" id="username" />
+          <input className={styles.form__input} type="text" name="username" id="username" value={username} onChange={handleUsernameChange}/>
         </div>
       </div>
       <div>
@@ -87,7 +115,7 @@ const SignUp = ({ toggleSignUp }) => {
           <input className={styles.form__input} type="text" name="email" id="email" value={email} onChange={handleEmailChange} />
         </div>
         {isErrorEmail ? (
-          <div className="error__email">
+          <div className={styles["error__email"]}>
             <p>Enter a valid Email</p>
             <img className="error__icon" src={errorIcon} alt="error icon" />
           </div>
@@ -126,7 +154,7 @@ const SignUp = ({ toggleSignUp }) => {
         )}
       </div>
 
-      <button className={styles.submit__btn} onClick={createUser}>Sign Up</button>
+      <button className={styles.submit__btn} >Sign Up</button>
 
       <div className={styles["form__view-toggle"]}>
         <p className={styles.toggle__text}>

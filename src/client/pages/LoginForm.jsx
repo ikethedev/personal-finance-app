@@ -3,6 +3,8 @@ import errorIcon from "../assets/images/formerror.svg";
 import hidePassword from "../assets/images/icon-hide-password.svg";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { supabase } from "../../backend/supabassClient";
+
 
 const LoginForm = ({ toggleSignUp, auth }) => {
   const [showPassword, setShowPass] = useState(false);
@@ -10,6 +12,7 @@ const LoginForm = ({ toggleSignUp, auth }) => {
   const [password, setPassword] = useState("");
   const [isErrorEmail, setIsErrorEmail] = useState(false);
   const [isErrorPassword, setIsErrorPassword] = useState(false);
+  const [data, setData] = useState([])
 
   function togglePasswordView() {
     setShowPass(!showPassword);
@@ -25,14 +28,29 @@ const LoginForm = ({ toggleSignUp, auth }) => {
     setPassword(passwordValue);
   };
 
-  const submitForm = (e) => {
-    e.preventDefault();
+  
 
-    return;
-  };
+  const getUserData = async (e) => {
+    e.preventDefault()
+    try{
+        const { data } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+          })
+
+          // send data to useState or UseEffect 
+          // useEffect since it is an api call and will change everytime a new user is loaded
+          // use empty array as the trigger since it only needs to run on the initial load
+
+    } catch(err) {
+        alert(err)
+        return
+    }
+  
+}
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={(getUserData)}>
       <h2 className={styles.form__header}>Login</h2>
       <div>
         <label htmlFor="email">Email</label>
@@ -68,7 +86,7 @@ const LoginForm = ({ toggleSignUp, auth }) => {
         </div>
       </div>
 
-      <button className={styles.submit__btn} onClick={submitForm}>Login</button>
+      <button  className={styles.submit__btn}>Login</button>
 
       <div className={styles["form__view-toggle"]}>
         <p className={styles.toggle__text}>
